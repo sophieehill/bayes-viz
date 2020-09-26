@@ -41,8 +41,8 @@ ui <- fluidPage(
       
       # Output: Tabset w/ plot, summary, and table ----
       tabsetPanel(type = "tabs",
-                  tabPanel("Visualization", plotOutput("bayes_viz")),
-                  tabPanel("Raw numbers", tableOutput("table"))
+                  tabPanel("Visualization", br(), plotOutput("bayes_viz")),
+                  tabPanel("Raw numbers", br(), br(), br(), tableOutput("table"))
                   ),
       
       )
@@ -187,3 +187,5 @@ bayes_viz
 
 # Run the application 
 shinyApp(ui = ui, server = server)
+
+
