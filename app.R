@@ -21,26 +21,30 @@ ui <- fluidPage(
   verticalLayout(
   withMathJax(),
   p(""),
-    p("Suppose that for two events $\\color{red}{A}$ and $\\color{blue}{B}$, we know $P(\\color{red}{A})$, $P(\\color{blue}{B})$, and $P(\\color{blue}{B}|\\color{red}{A})$. Can we find $P(\\color{red}{A}|\\color{blue}{B})$?"),
+    p("Suppose that for two events, $\\color{red}{A}$ and $\\color{blue}{B}$, we know $P(\\color{red}{A})$, $P(\\color{blue}{B})$, and $P(\\color{blue}{B}|\\color{red}{A})$... can we find $P(\\color{red}{A}|\\color{blue}{B})$?"),
     p("Yes! To see why, remember that we can write $P(\\color{red}{A} \\& \\color{blue}{B})$ in two ways: $ P(\\color{blue}{B}|\\color{red}{A}) \\times P(\\color{red}{A}) = P(\\color{red}{A} \\& \\color{blue}{B}) = P(\\color{red}{A}|\\color{blue}{B}) \\times P(\\color{blue}{B}) $"),
-    p("This means that the yellow area of both squares equals $P(\\color{red}{A} \\& \\color{blue}{B})$. So if we know $P(\\color{red}{A})$, $P(\\color{blue}{B})$, and $P(\\color{blue}{B}|\\color{red}{A})$, then we know that: $ P(\\color{red}{A}|\\color{blue}{B}) = \\frac{ P(\\color{blue}{B}|\\color{red}{A}) \\times P(\\color{red}{A}) }{P(\\color{blue}{B})} $"),
+    p("This means that the yellow area on both squares equals $P(\\color{red}{A} \\& \\color{blue}{B})$. So if we have $P(\\color{red}{A})$, $P(\\color{blue}{B})$, and $P(\\color{blue}{B}|\\color{red}{A})$, then we can calculate: $ P(\\color{red}{A}|\\color{blue}{B}) = \\frac{ P(\\color{blue}{B}|\\color{red}{A}) \\times P(\\color{red}{A}) }{P(\\color{blue}{B})} $"),
   p(""),
   p(""),
   p(""),
-
   
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
     sidebarPanel(
       sliderInput("p.a", "Probability of A:", value=0.5, step=0.01, min = 0, max = 1),
       sliderInput("p.b", "Probability of B:", value=0.8, step=0.01, min = 0, max = 1),
-      sliderInput("p.b.given.a", "Probability of B given A:", value=0.6, step=0.01, min = 0, max = 1),
+      sliderInput("p.b.given.a", "Probability of B given A:", value=0.6, step=0.01, min = 0, max = 1)
     ),
-    
     
     # Show a plot of the generated distribution
     mainPanel(
-      plotOutput("bayes_viz")
+      
+      # Output: Tabset w/ plot, summary, and table ----
+      tabsetPanel(type = "tabs",
+                  tabPanel("Visualization", plotOutput("bayes_viz")),
+                  tabPanel("Raw numbers", tableOutput("table"))
+                  ),
+      
       )
     )
   )
@@ -48,7 +52,24 @@ ui <- fluidPage(
 
 # Define server logic 
 server <- function(input, output) {
-
+  
+  
+  output$table <- renderTable({
+    p.a <- input$p.a
+    p.b <- input$p.b
+    p.b.given.a <- input$p.b.given.a
+    p.a.and.b <- p.b.given.a * p.a
+    p.a.given.b <- (p.b.given.a * p.a)/p.b
+    dat <- cbind(p.a, p.b, p.b.given.a, p.a.and.b, p.a.given.b)
+    datt <- t(dat)
+    datt <- round(datt, digits=3)
+    labels <- c("P(A)", "P(B)", "P(B|A)", "P(A&B)", "P(A|B)")
+    type <- c("Input", "Input", "Input", "Output", "Output")
+    datt <- cbind(labels, datt, type)
+    colnames(datt) <- c("Variable", "Value", "Type")
+    datt
+  })
+  
   
   output$bayes_viz <- renderPlot({
     
@@ -158,7 +179,6 @@ p2 = p2 + annotation_custom(grob = textGrob("P(A&B)"),
 
 
 bayes_viz = grid.arrange(p1, p2, ncol=2)
-
 
 bayes_viz
 

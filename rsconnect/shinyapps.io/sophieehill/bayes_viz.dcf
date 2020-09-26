@@ -1,0 +1,12 @@
+name: bayes_viz
+title: bayes_viz
+username:
+account: sophieehill
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2892825
+bundleId: 3673461
+url: https://sophieehill.shinyapps.io/bayes_viz/
+when: 1601126466.16698
+asMultiple: FALSE
+asStatic: FALSE
