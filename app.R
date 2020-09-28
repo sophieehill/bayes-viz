@@ -92,7 +92,7 @@ p <- ggplot(df) +
   geom_rect(xmin = 0, xmax = p.a,   ymin = 0, ymax = 1-p.b.given.a,   fill = "#a6cee3") +
   # top left
   geom_rect(xmin = 0, xmax = p.a,   ymin = 1-p.b.given.a,    ymax = 1, fill = "#f3f470") +
-  # RHS (not broken up into 2 blocks, because we don't actually need to know P(B|~A))
+  # RHS (not broken up into 2 blocks, because we don't actually need to know P(B|¬A))
   geom_rect(xmin = p.a, xmax = 1, ymin = 0, ymax = 1,   fill = "#1f78b4") +
   labs(title="Factoring by P(A)") + 
   coord_cartesian(clip = "off") + coord_fixed(ratio=1, ylim=c(0, 1.3), xlim=c(-0.3, 1)) +
@@ -121,7 +121,7 @@ p1 = p1 + annotation_custom(grob = textGrob("P(A)"),
                                      gp=gpar(col="black", lwd=1.5)), 
                     xmin = 0, xmax = p.a, ymin = 1.05, ymax=1.05)
 
-p1 = p1 + annotation_custom(grob = textGrob("P(~A)"),  
+p1 = p1 + annotation_custom(grob = textGrob("P(¬A)"),  
                             xmin = p.a, xmax = 1, ymin = 1.1, ymax = 1.1) +
   annotation_custom(grob = linesGrob(arrow=arrow(type="open", ends="both", length=unit(2,"mm")), 
                                      gp=gpar(col="black", lwd=1.5)), 
@@ -136,7 +136,7 @@ p2 <- ggplot(df) +
   geom_rect(xmin = 0, xmax = p.b,   ymin = 0, ymax = 1-p.a.given.b,   fill = "#b7aef0") +
   # top left
   geom_rect(xmin = 0, xmax = p.b,   ymin = 1-p.a.given.b,    ymax = 1, fill = "#f3f470") +
-  # RHS (not broken up into 2 blocks, because we don't actually need to know P(B|~A))
+  # RHS (not broken up into 2 blocks, because we don't actually need to know P(B|¬A))
   geom_rect(xmin = p.b, xmax = 1, ymin = 0, ymax = 1,   fill = "#7b72b8") +
   labs(title="Factoring by P(B)") + 
   coord_cartesian(clip = "off") + coord_fixed(ratio=1, ylim=c(0, 1.3), xlim=c(-0.3, 1)) +
@@ -155,7 +155,7 @@ p2 = p2 + annotation_custom(grob = rectGrob(gp=gpar(fill="red", alpha=0.5)),
                     xmin = -0.05, xmax = -0.05, ymin = 1-p.a.given.b, ymax = 1)
   # add box to highlight the unknown quantity P(A|B)
 
-p2 = p2 + annotation_custom(grob = textGrob("P(~A | B)"),  
+p2 = p2 + annotation_custom(grob = textGrob("P(¬A | B)"),  
                             xmin = -0.2, xmax = -0.2, ymin = 0, ymax = 1-p.a.given.b) +
   annotation_custom(grob = linesGrob(arrow=arrow(type="open", ends="both", length=unit(2,"mm")), 
                                      gp=gpar(col="black", lwd=1.5)), 
@@ -167,7 +167,7 @@ p2 = p2 + annotation_custom(grob = textGrob("P(B)"),
                                      gp=gpar(col="black", lwd=1.5)), 
                     xmin = 0, xmax = p.b, ymin = 1.05, ymax=1.05)
 
-p2 = p2 + annotation_custom(grob = textGrob("P(~B)"),  
+p2 = p2 + annotation_custom(grob = textGrob("P(¬B)"),  
                             xmin = p.b, xmax = 1, ymin = 1.1, ymax = 1.1) +
   annotation_custom(grob = linesGrob(arrow=arrow(type="open", ends="both", length=unit(2,"mm")), 
                                      gp=gpar(col="black", lwd=1.5)), 
