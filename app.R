@@ -108,7 +108,7 @@ p1 = p + annotation_custom(grob = textGrob("P(B | A)"),
                                      gp=gpar(col="black", lwd=1.5)), 
                     xmin = -0.05, xmax = -0.05, ymin = 1-p.b.given.a, ymax = 1)
 
-p1 = p1 + annotation_custom(grob = textGrob("P(~B | A)"),  
+p1 = p1 + annotation_custom(grob = textGrob("P(¬B | A)"),  
                             xmin = -0.2, xmax = -0.2, ymin = 0, ymax = 1-p.b.given.a) +
   annotation_custom(grob = linesGrob(arrow=arrow(type="open", ends="both", length=unit(2,"mm")), 
                                      gp=gpar(col="black", lwd=1.5)), 
